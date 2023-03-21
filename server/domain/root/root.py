@@ -3,23 +3,14 @@
 from flask import render_template, session
 import psycopg2
 
-DB_HOST = "db.tecnico.ulisboa.pt"
-DB_USER = "ist199088"
-DB_DATABASE = DB_USER
-DB_PASSWORD = "jackers"
-DB_CONNECTION_STRING = "host=%s dbname=%s user=%s password=%s" % (
-    DB_HOST,
-    DB_DATABASE,
-    DB_USER,
-    DB_PASSWORD,
-)
+from utils import get_db_connection_string as DB_CONNECTION_STRING
 
 
 def get_main_page():
     dbConn = None
     cursor = None
     try:
-        dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+        dbConn = psycopg2.connect(DB_CONNECTION_STRING())
         cursor = dbConn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         data = []
         cursor.execute("SELECT * FROM team;")
@@ -53,7 +44,7 @@ def clear():
     dbConn = None
     cursor = None
     try:
-        dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+        dbConn = psycopg2.connect(DB_CONNECTION_STRING())
         cursor = dbConn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         query = """
             DELETE FROM plays WHERE 1=1;
