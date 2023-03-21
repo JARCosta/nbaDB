@@ -1,6 +1,0 @@
-{   
-    "DB_HOST" : "db.tecnico.ulisboa.pt",
-    "DB_USER" : "ust_username",
-    "DB_DATABASE" : "ust_username",
-    "DB_PASSWORD" : "db_password"
-}
