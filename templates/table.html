@@ -1,0 +1,83 @@
+<head>
+    <title>Table - nbaDB</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"> -->
+    <link rel="shortcut icon" href="https://www.nba.com/favicon-32x32.png" type="image/png">
+
+</head>
+<style>
+
+    .tbl {
+        display: flex;
+        flex-direction: column;
+    }
+    .row {
+    display: flex;
+    min-height: 50px;
+    }
+    .cell {
+    flex: 4;
+    border: 1px solid red;
+    }
+    .cell:nth-child(1) {
+    flex: 1;
+    }
+    .cell:nth-child(2) {
+    flex: 2;
+    }
+    .cell.span4-5 {
+    flex: 8 24px;                    /*  col 4,5 flex-grow/border/padding  */
+    }
+    .cell.span3-4 {
+    flex: 8 24px;                    /*  col 3,4 flex-grow/border/padding  */
+    }
+    .cell.span3-5 {
+        flex: 12 36px;                   /*  col 3,4,5 flex-grow/border/padding  */
+    }
+    .row:first-child .cell {
+        display: flex;
+        justify-content: center;         /*  center horiz. */
+        align-items: center;             /*  center vert. */
+    }
+    .row .cell {
+        padding: 5px;
+        box-sizing: border-box;
+    }
+</style>
+<html>
+    <div id="background">
+        <div class="overlay"></div>
+    </div>
+    <div class="App-header" id="content">
+        <img src="https://www.nba.com/apple-touch-icon.png" class="App-logo" alt="logo" />
+        <a href="https://jarcosta-organic-sniffle-xxv5jqrj9j92p4vx-5000.preview.app.github.dev" style="color: #fff;"><h1>nbaDB</h1></a>
+    </div>
+    <div class="App-body" id="content">
+        <div class="tbl">
+            <div class="row">
+                <div class="cell">ID </div>
+                <div class="cell">Nr </div>
+                <div class="cell">Header 1 </div>
+                <div class="cell span4-5"> Header 2 </div>
+            </div>
+            <div class="row">
+                <div class="cell">1</div>
+                <div class="cell">2</div>
+                <div class="cell">Content</div>
+                <div class="cell">Content</div>
+                <div class="cell">Content</div>
+            </div>
+            <div class="row">
+                <div class="cell">2</div>
+                <div class="cell">3</div>
+                <div class="cell span3-5">Content</div>
+            </div>
+            <div class="row">
+                <div class="cell">1</div>
+                <div class="cell">2</div>
+                <div class="cell span3-4">Content</div>
+                <div class="cell">Content</div>
+            </div>
+        </div>
+</html>

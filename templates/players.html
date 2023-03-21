@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Players - nbaDB</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" href="https://www.nba.com/favicon-32x32.png" type="image/png">
+    <!-- Favicon to work in all desktop browsers:
+    <link rel="shortcut icon" href="//static.tecnico.ulisboa.pt/favicon.png" type="image/png"> -->
+</head>
+<body>
+    <div id="background">
+        <div class="overlay"></div>
+    </div>
+    <div class="App-header" id="content">
+        <img src="https://www.nba.com/apple-touch-icon.png" class="App-logo" alt="logo" />
+        <a href="https://jarcosta-organic-sniffle-xxv5jqrj9j92p4vx-5000.preview.app.github.dev" style="color: #fff;"><h1>nbaDB</h1></a>
+    </div>
+    <div>
+        <div id="content">
+            {% if cursor %}
+            <table>
+                <!-- <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th></th>
+                        <th>Name</th>
+                        
+                    </tr>
+                </thead> -->
+                <tbody>
+                    {% for record in cursor %}
+                    <tr>
+                        <td><a href="games?team={{record[1]}}">
+                            <img class="miniature" id="team-logo" src={{record[3]}} style="background-color: {{record[2]}};">
+                        </a></td>
+                        <td><a href="games?player={{record[0]}}">{{record[0]}}</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p> Erro: ao obter dados da base de dados!</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

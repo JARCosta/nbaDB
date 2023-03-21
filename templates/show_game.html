@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Table Printer - nbaDB</title>
+    <link rel="stylesheet" type="text/css" href="https://web2.tecnico.ulisboa.pt/~ist199088/templates/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" href="https://www.nba.com/favicon-32x32.png" type="image/png">
+    <!-- Favicon to work in all desktop browsers:
+    <link rel="shortcut icon" href="//static.tecnico.ulisboa.pt/favicon.png" type="image/png"> -->
+</head>
+<body>
+    <section id="content-wrap">
+        <div id="background">
+            <div class="overlay"></div>
+        </div>
+        <div id="logo">
+            <a href="https://web2.tecnico.ulisboa.pt/~ist199088/app.cgi/" style="color: #fff;"><h1>nbaDB</h1></a>
+        </div>
+        <div id="content" class="">
+            {% if cursor %}
+                <table>
+                    <tbody>
+                        {% for record in cursor %}
+                        <tr>
+                            <td><a href="games?player={{record[0]}}">{{record[0]}}</a></td>
+                            <td>{{record[2]}}</td>
+                            <td>{{record[3]}}</td>
+                            <td>{{record[4]}}</td>
+                            <td>{{record[5]}}</td>
+                            <td>{{record[6]}}</td>
+                            <td>{{record[7]}}</td>
+                            <td>{{record[8]}}</td>
+                            <td>{{record[9]}}</td>
+                            <td>{{record[10]}}</td>
+                            <td>{{record[12]}}</td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p> Erro: ao obter dados da base de dados!</p>
+            {% endif %}
+        </div>
+    </section>
+</body>
+</html>

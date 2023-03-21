@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Games - nbaDB</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" href="https://www.nba.com/favicon-32x32.png" type="image/png">
+    <script src="https://web2.tecnico.ulisboa.pt/~ist199088/templates/test.js"></script>
+    <!-- Favicon to work in all desktop browsers:
+    <link rel="shortcut icon" href="//static.tecnico.ulisboa.pt/favicon.png" type="image/png"> -->
+</head>
+
+<body>
+    <div id="background">
+        <div class="overlay"></div>
+    </div>
+    <div class="App-header" id="content">
+        <img src="https://www.nba.com/apple-touch-icon.png" class="App-logo" alt="logo" />
+        <a href="https://jarcosta-organic-sniffle-xxv5jqrj9j92p4vx-5000.preview.app.github.dev" style="color: #fff;"><h1>nbaDB</h1></a>
+    </div>
+    <div>
+        <div id="content">
+            <h4>{{result[0]}}</h4>
+            {% if cursor %}
+            <table>
+                <div class="overlay"></div>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Date</th>
+                        <th>Home</th>
+                        <th></th>
+                        <th></th>
+                        <th>Visitor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in cursor %}
+                    <tr>
+                        {% if record[10] %}
+                        <td><img class="miniature" src="https://www.freeiconspng.com/uploads/black-checkmark-png-10.png"
+                                id="inverted" /></td>
+                        {% else %}
+                        <td></td>
+                        {% endif %}
+                        <td><a href="show_game?href={{record[5]}}">{{record[0]}}</a></td>
+                        <!-- <td><a href={{record[5]}}>{{record[0]}}</a></td> -->
+                        <td style="text-align: left;">
+                            <a href="games?short={{record[1]}}">
+                                <img class="miniature" id="team-logo" src={{record[8]}} style="background-color: {{record[6]}};">
+                                {{record[1]}}
+                            </a>
+                        </td>
+
+                        <td class="score">{{ record[2] }}</td>
+                        <td class="score">{{ record[4] }}</td>
+                        <td style="text-align: right;">
+                            <a href="games?short={{record[3]}}">
+                                {{record[3]}}
+                                <img class="miniature" id="team-logo" src={{record[9]}} style="background-color: {{record[7]}};">
+                            </a>
+                        </td>
+                        <!-- <td><a href={{record[9]}}>{{record[3]}}</a></td>
+                            <td><img class="miniature" id="team-logo" src={{record[11]}} style="background-color: {{record[7]}};"></td> -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p> Erro: ao obter dados da base de dados!</p>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+
+</html>
