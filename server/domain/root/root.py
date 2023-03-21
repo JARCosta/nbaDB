@@ -25,7 +25,7 @@ def get_main_page():
         cursor.execute("SELECT * FROM game WHERE loaded = 0")
         data.append(len(list(cursor)))
         
-        file1 = open("../log.log", "a")
+        file1 = open("log.log", "a")
         file1.write(f'session login: {session["user_id"]}\n')
         
         #return str([len(teams), len(games), len(players)])

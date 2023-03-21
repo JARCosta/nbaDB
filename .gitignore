@@ -1,6 +1,6 @@
 *.pyc
 __pycache__/
 
-log.log
+server/log.log
 
 server/config.json

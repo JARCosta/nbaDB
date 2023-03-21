@@ -86,7 +86,7 @@ def update_players_aux(cursor, game):
     WHERE href = %s;
     """
     data.append(game[5])
-    file1 = open("../log.log", "a")
+    file1 = open("log.log", "a")
     file1.write(str(game) + "\n")
     return query, data, [str(i.find("caption").text).split("Basic and Advanced Stats Table")[0][:-1] for i in tables]
 
@@ -115,7 +115,7 @@ def update():
         return str([curs, query, data])
     except Exception as e:
         if str(e) == 'The owner of this website (www.basketball-reference.com) has banned you temporarily from accessing this website.':
-            file1 = open("../log.log", "w")
+            file1 = open("log.log", "w")
             file1.write("ban while updating players")
         return str([e, game])  # Renders a page with the error.
     finally:
