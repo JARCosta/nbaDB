@@ -26,7 +26,6 @@ def root():
 def teams():
     return domain.teams.get_list()
 
-
 def update_teams():
     return domain.teams.update()
 
@@ -34,14 +33,14 @@ def update_teams():
 def players():
     return domain.players.get_list()
 
+def update_players():
+    return domain.players.update()
 
 def games():
     return domain.games.get_list()
 
-
 def update_games():
     return domain.games.update()
-
 
 def show_games():
     return domain.games.show()
@@ -49,5 +48,3 @@ def show_games():
 
 def clear():
     return domain.root.clear()
-
-

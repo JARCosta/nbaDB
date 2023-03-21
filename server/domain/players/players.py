@@ -117,7 +117,7 @@ def update():
         if str(e) == 'The owner of this website (www.basketball-reference.com) has banned you temporarily from accessing this website.':
             file1 = open("log.log", "w")
             file1.write("ban while updating players")
-        return str([e, game])  # Renders a page with the error.
+        return str(e)  # Renders a page with the error.
     finally:
         dbConn.commit()
         cursor.close()

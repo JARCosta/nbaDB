@@ -84,7 +84,7 @@ def update():
     dbConn = None
     cursor = None
     try:
-        dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+        dbConn = psycopg2.connect(DB_CONNECTION_STRING())
         cursor = dbConn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         # if curs == []:
         #     years = range(2020,2024)

@@ -6,4 +6,4 @@ MAX_RETRIES = 5
 from .root import *
 
 # Execute code on package import
-print('Package players initialized')
+print('Package root initialized')
