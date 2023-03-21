@@ -42,8 +42,8 @@ def games():
     return serverImpl.games()
 
 @app.route("/update_games")
-def update_games():
-    return serverImpl.update_games
+def update_teams():
+    return serverImpl.update_teams()
 
 @app.route("/show_games")
 def show_games():
