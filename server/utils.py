@@ -2,9 +2,7 @@
 
 import json
 
-DB_CONNECTION_STRING = None
-
-def __init__():
+def get_db_connection_string():
     DB_FILE = open("config.json")
 
     DB_INFO = json.load(DB_FILE)
@@ -17,6 +15,3 @@ def __init__():
         DB_INFO["DB_PASSWORD"],
     )
     return DB_CONNECTION_STRING
-
-def get_db_connection_string():
-    return __init__()
