@@ -3,11 +3,9 @@
 import hashlib
 import time
 from flask import Flask, request, session
-from server import domain
+import domain
 
-import serverImpl
-
-app = Flask(__name__, template_folder='templates/../domain')
+app = Flask(__name__, template_folder='domain', static_folder='domain/static')
 app.secret_key = 'your_secret_key'
 
 @app.before_request
@@ -43,7 +41,7 @@ def games():
     return domain.games.get_list()
 
 @app.route("/update_games")
-def update_teams():
+def update_games():
     return domain.games.update()
 
 @app.route("/show_games")

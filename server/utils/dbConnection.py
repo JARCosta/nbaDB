@@ -3,7 +3,7 @@
 import json
 
 def get_db_connection_string():
-    DB_FILE = open("server/config.json")
+    DB_FILE = open("server/utils/config.json")
 
     DB_INFO = json.load(DB_FILE)
     DB_FILE.close()

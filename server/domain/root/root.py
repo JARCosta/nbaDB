@@ -2,8 +2,10 @@
 
 from flask import render_template, session
 import psycopg2
+from psycopg2.extras import DictCursor
 
-from utils import get_db_connection_string as DB_CONNECTION_STRING
+from utils.dbConnection import get_db_connection_string as DB_CONNECTION_STRING
+from utils.log import logJoin
 
 
 def get_main_page():
@@ -11,7 +13,7 @@ def get_main_page():
     cursor = None
     try:
         dbConn = psycopg2.connect(DB_CONNECTION_STRING())
-        cursor = dbConn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor = dbConn.cursor(cursor_factory=DictCursor)
         data = []
         cursor.execute("SELECT * FROM team;")
         data.append(len(list(cursor)))
@@ -25,13 +27,12 @@ def get_main_page():
         cursor.execute("SELECT * FROM game WHERE loaded = 0")
         data.append(len(list(cursor)))
         
-        file1 = open("log.log", "a")
-        file1.write(f'session login: {session["user_id"]}\n')
+        logJoin(session["user_id"])
         
         #return str([len(teams), len(games), len(players)])
         return render_template("root/index.html", result=data, title="Hellow")
-    except Exception as e:
-        raise e  # Renders a page with the error.
+    # except Exception as e:
+    #     raise e  # Renders a page with the error.
     finally:
         cursor.close()
         # cursor2.close()
@@ -45,7 +46,7 @@ def clear():
     cursor = None
     try:
         dbConn = psycopg2.connect(DB_CONNECTION_STRING())
-        cursor = dbConn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor = dbConn.cursor(cursor_factory=DictCursor)
         query = """
             DELETE FROM plays WHERE 1=1;
             DELETE FROM player WHERE 1=1;

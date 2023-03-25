@@ -1,16 +1,12 @@
-
-
-
-
-
-
+#!/usr/bin/python3
 
 from asyncio import sleep
 from bs4 import BeautifulSoup
 from flask import render_template, request
 import psycopg2
+from psycopg2.extras import DictCursor
 import requests
-from utils import get_db_connection_string as DB_CONNECTION_STRING
+from utils.dbConnection import get_db_connection_string as DB_CONNECTION_STRING
 
 def get_soup(url:str):  # sourcery skip: raise-specific-error
     r_html = requests.get(url).text
@@ -24,7 +20,7 @@ def get_list():
     cursor = None
     try:
         dbConn = psycopg2.connect(DB_CONNECTION_STRING())
-        cursor = dbConn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor = dbConn.cursor(cursor_factory=DictCursor)
         
         arg = list(request.args)
         # return str(request.args[arg[0]])
@@ -85,7 +81,7 @@ def update():
     cursor = None
     try:
         dbConn = psycopg2.connect(DB_CONNECTION_STRING())
-        cursor = dbConn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor = dbConn.cursor(cursor_factory=DictCursor)
         # if curs == []:
         #     years = range(2020,2024)
         # else:
@@ -134,7 +130,7 @@ def show():
     cursor = None
     try:
         dbConn = psycopg2.connect(DB_CONNECTION_STRING)
-        cursor = dbConn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor = dbConn.cursor(cursor_factory=DictCursor)
         href = request.args["href"]
         query = "select * from plays join player on player = player.name where plays.href =%s"
         cursor.execute(query, (href,))

@@ -4,4 +4,4 @@ __pycache__/
 server/log.log
 log.log
 
-server/config.json
+server/utils/config.json

@@ -4,8 +4,9 @@ from asyncio import sleep
 from bs4 import BeautifulSoup
 from flask import render_template
 import psycopg2
+from psycopg2.extras import DictCursor
 import requests
-from utils import get_db_connection_string as DB_CONNECTION_STRING
+from utils.dbConnection import get_db_connection_string as DB_CONNECTION_STRING
 
 def get_soup(url:str):  # sourcery skip: raise-specific-error
     r_html = requests.get(url).text
@@ -20,7 +21,7 @@ def get_list():
     cursor = None
     try:
         dbConn = psycopg2.connect(DB_CONNECTION_STRING())
-        cursor = dbConn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor = dbConn.cursor(cursor_factory=DictCursor)
         cursor.execute("SELECT player.name, player.href, team.name, team.href, team.color, team.logo FROM player join team on team = team.name ORDER BY player.name;")
         return render_template("players/players.html", cursor=cursor)
     except Exception as e:
@@ -96,7 +97,7 @@ def update():
     cursor = None
     try:
         dbConn = psycopg2.connect(DB_CONNECTION_STRING())
-        cursor = dbConn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor = dbConn.cursor(cursor_factory=DictCursor)
         cursor.execute('SELECT * FROM game WHERE loaded=0 ORDER BY date DESC;')
         curs = list(cursor)
         n_its = 20

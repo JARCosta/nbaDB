@@ -2,15 +2,16 @@
 
 from flask import render_template
 import psycopg2
+from psycopg2.extras import DictCursor
 
-from utils import get_db_connection_string as DB_CONNECTION_STRING
+from utils.dbConnection import get_db_connection_string as DB_CONNECTION_STRING
 
 def get_list():
     dbConn = None
     cursor = None
     try:
         dbConn = psycopg2.connect(DB_CONNECTION_STRING())
-        cursor = dbConn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor = dbConn.cursor(cursor_factory=DictCursor)
         cursor.execute("SELECT * FROM team ORDER BY name;")
         return render_template("teams/teams.html", cursor=cursor)
     except Exception as e:
@@ -24,7 +25,7 @@ def update():
     cursor = None
     try:
         dbConn = psycopg2.connect(DB_CONNECTION_STRING())
-        cursor = dbConn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor = dbConn.cursor(cursor_factory=DictCursor)
         years = range(2022,2024)
         query,data = "START TRANSACTION;", []
         for season in years:
@@ -60,7 +61,7 @@ def update_colors():
     cursor = None
     try:
         dbConn = psycopg2.connect(DB_CONNECTION_STRING())
-        cursor = dbConn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor = dbConn.cursor(cursor_factory=DictCursor)
 
         url =  'https://usteamcolors.com/nba-colors/'
         soup = get_soup(url).find_all('li', {'class' : 'card'})
