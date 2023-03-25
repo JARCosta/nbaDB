@@ -5,7 +5,7 @@ MAX_RETRIES = 5
 # Import modules and sub-packages
 from .server import *
 from .serverImpl import *
-import server.domain
+from .domain import *
 
 # Execute code on package import
 print('Package server initialized')
