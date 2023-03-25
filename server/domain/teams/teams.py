@@ -4,13 +4,13 @@ from flask import render_template
 import psycopg2
 from psycopg2.extras import DictCursor
 
-from utils.dbConnection import get_db_connection_string as DB_CONNECTION_STRING
+from utils.dbConnection import get_db_connection_string
 
 def get_list():
     dbConn = None
     cursor = None
     try:
-        dbConn = psycopg2.connect(DB_CONNECTION_STRING())
+        dbConn = psycopg2.connect(get_db_connection_string())
         cursor = dbConn.cursor(cursor_factory=DictCursor)
         cursor.execute("SELECT * FROM team ORDER BY name;")
         return render_template("teams/teams.html", cursor=cursor)
@@ -24,7 +24,7 @@ def update():
     dbConn = None
     cursor = None
     try:
-        dbConn = psycopg2.connect(DB_CONNECTION_STRING())
+        dbConn = psycopg2.connect(get_db_connection_string())
         cursor = dbConn.cursor(cursor_factory=DictCursor)
         years = range(2022,2024)
         query,data = "START TRANSACTION;", []
@@ -60,7 +60,7 @@ def update_colors():
     dbConn = None
     cursor = None
     try:
-        dbConn = psycopg2.connect(DB_CONNECTION_STRING())
+        dbConn = psycopg2.connect(get_db_connection_string())
         cursor = dbConn.cursor(cursor_factory=DictCursor)
 
         url =  'https://usteamcolors.com/nba-colors/'

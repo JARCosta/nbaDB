@@ -6,7 +6,7 @@ from flask import render_template, request
 import psycopg2
 from psycopg2.extras import DictCursor
 import requests
-from utils.dbConnection import get_db_connection_string as DB_CONNECTION_STRING
+from utils.dbConnection import get_db_connection_string
 
 def get_soup(url:str):  # sourcery skip: raise-specific-error
     r_html = requests.get(url).text
@@ -19,7 +19,7 @@ def get_list():
     dbConn = None
     cursor = None
     try:
-        dbConn = psycopg2.connect(DB_CONNECTION_STRING())
+        dbConn = psycopg2.connect(get_db_connection_string())
         cursor = dbConn.cursor(cursor_factory=DictCursor)
         
         arg = list(request.args)
@@ -80,7 +80,7 @@ def update():
     dbConn = None
     cursor = None
     try:
-        dbConn = psycopg2.connect(DB_CONNECTION_STRING())
+        dbConn = psycopg2.connect(get_db_connection_string())
         cursor = dbConn.cursor(cursor_factory=DictCursor)
         # if curs == []:
         #     years = range(2020,2024)
