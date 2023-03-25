@@ -22,9 +22,9 @@ def get_list():
         dbConn = psycopg2.connect(DB_CONNECTION_STRING())
         cursor = dbConn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute("SELECT player.name, player.href, team.name, team.href, team.color, team.logo FROM player join team on team = team.name ORDER BY player.name;")
-        return render_template("players.html", cursor=cursor)
+        return render_template("players/players.html", cursor=cursor)
     except Exception as e:
-        return str(e)  # Renders a page with the error.
+        raise e  # Renders a page with the error.
     finally:
         cursor.close()
         dbConn.close()
@@ -111,13 +111,13 @@ def update():
                 data.extend(temp[1])
             cursor.execute(query + "COMMIT;", data)
             sleep(120)
-        return render_template("redirect_to_root.html")
+        return render_template("domain/../templates/redirect_to_root.html")
         return str([curs, query, data])
     except Exception as e:
         if str(e) == 'The owner of this website (www.basketball-reference.com) has banned you temporarily from accessing this website.':
             file1 = open("log.log", "w")
             file1.write("ban while updating players")
-        return str(e)  # Renders a page with the error.
+        raise e  # Renders a page with the error.
     finally:
         dbConn.commit()
         cursor.close()

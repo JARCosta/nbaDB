@@ -29,9 +29,9 @@ def get_main_page():
         file1.write(f'session login: {session["user_id"]}\n')
         
         #return str([len(teams), len(games), len(players)])
-        return render_template("index.html", result=data, title="Hellow")
+        return render_template("root/index.html", result=data, title="Hellow")
     except Exception as e:
-        return str(e)  # Renders a page with the error.
+        raise e  # Renders a page with the error.
     finally:
         cursor.close()
         # cursor2.close()
@@ -55,7 +55,7 @@ def clear():
         cursor.execute(query)
         return query
     except Exception as e:
-        return str(e)  # Renders a page with the error.
+        raise e  # Renders a page with the error.
     finally:
         dbConn.commit()
         cursor.close()

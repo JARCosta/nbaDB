@@ -72,9 +72,9 @@ def get_list():
         #         where player = 'Kevin Durant' and (home.name = 'Orlando Magic' or visitor.name = 'Orlando Magic')"""
 
         cursor.execute(query, data)
-        return render_template("games.html", cursor=cursor, result=result)
+        return render_template("games/games.html", cursor=cursor, result=result)
     except Exception as e:
-        return str(e)  # Renders a page with the error.
+        raise e  # Renders a page with the error.
     finally:
         cursor.close()
         dbConn.close()
@@ -120,10 +120,10 @@ def update():
                     data.extend([date, home, h_points, visitor, v_points, href, year, date, home, visitor])
             cursor.execute(query+"COMMIT;", data)
             sleep(60)
-        return render_template("redirect_to_root.html")
+        return render_template("domain/../templates/redirect_to_root.html")
         return "Success loading months: " + str(months)
     except Exception as e:
-        return str(e)  # Renders a page with the error.
+        raise e  # Renders a page with the error.
     finally:
         dbConn.commit()
         cursor.close()
@@ -138,9 +138,9 @@ def show():
         href = request.args["href"]
         query = "select * from plays join player on player = player.name where plays.href =%s"
         cursor.execute(query, (href,))
-        return render_template("show_game.html", cursor=cursor)
+        return render_template("games/show_game.html", cursor=cursor)
     except Exception as e:
-        return str(e)  # Renders a page with the error.
+        raise e  # Renders a page with the error.
     finally:
         cursor.close()
         dbConn.close()

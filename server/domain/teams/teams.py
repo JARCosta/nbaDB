@@ -12,9 +12,9 @@ def get_list():
         dbConn = psycopg2.connect(DB_CONNECTION_STRING())
         cursor = dbConn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute("SELECT * FROM team ORDER BY name;")
-        return render_template("teams.html", cursor=cursor)
+        return render_template("teams/teams.html", cursor=cursor)
     except Exception as e:
-        return str(e)  # Renders a page with the error.
+        raise e  # Renders a page with the error.
     finally:
         cursor.close()
         dbConn.close()
@@ -46,7 +46,7 @@ def update():
                 data.extend([name, short, season, name, season])
         cursor.execute(query+"COMMIT;", tuple(data))
         update_colors()
-        return render_template("teams.html")
+        return render_template("teams/teams.html")
         return str(teams)
     except Exception:
         return str(Exception)  # Renders a page with the error.
@@ -78,9 +78,9 @@ def update_colors():
             """
             data.extend(iter([colors[i], logos[i], teams[i]]))
         cursor.execute(query+"COMMIT;", tuple(data))
-        return render_template("redirect_to_root.html")
+        return render_template("domain/../templates/redirect_to_root.html")
     except Exception as e:
-        return str(e)  # Renders a page with the error.
+        raise e  # Renders a page with the error.
     finally:
         dbConn.commit()
         cursor.close()
