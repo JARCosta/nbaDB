@@ -6,6 +6,7 @@ from psycopg2.extras import DictCursor
 
 from utils.dbConnection import get_db_connection_string
 from utils.log import log_join
+from utils.utils import get_home_url
 
 
 def get_main_page():
@@ -30,7 +31,7 @@ def get_main_page():
         log_join(session["user_id"])
         
         #return str([len(teams), len(games), len(players)])
-        return render_template("root/index.html", result=data, title="Hellow")
+        return render_template("root/index.html", result=data, title="Hellow", home = get_home_url())
     # except Exception as e:
     #     raise e  # Renders a page with the error.
     finally:

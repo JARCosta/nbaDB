@@ -7,6 +7,7 @@ import psycopg2
 from psycopg2.extras import DictCursor
 import requests
 from utils.dbConnection import get_db_connection_string
+from utils.utils import get_home_url
 
 def get_soup(url:str):  # sourcery skip: raise-specific-error
     r_html = requests.get(url).text
@@ -23,7 +24,7 @@ def get_list():
         dbConn = psycopg2.connect(get_db_connection_string())
         cursor = dbConn.cursor(cursor_factory=DictCursor)
         cursor.execute("SELECT player.name, player.href, team.name, team.href, team.color, team.logo FROM player join team on team = team.name ORDER BY player.name;")
-        return render_template("players/players.html", cursor=cursor)
+        return render_template("players/players.html", cursor=cursor, home = get_home_url())
     except Exception as e:
         raise e  # Renders a page with the error.
     finally:
@@ -112,7 +113,7 @@ def update():
                 data.extend(temp[1])
             cursor.execute(query + "COMMIT;", data)
             sleep(120)
-        return render_template("domain/../templates/redirect_to_root.html")
+        return render_template("domain/../templates/redirect_to_root.html", home = get_home_url())
         return str([curs, query, data])
     except Exception as e:
         if str(e) == 'The owner of this website (www.basketball-reference.com) has banned you temporarily from accessing this website.':

@@ -7,6 +7,7 @@ import psycopg2
 from psycopg2.extras import DictCursor
 import requests
 from utils.dbConnection import get_db_connection_string
+from utils.utils import get_home_url
 
 def get_soup(url:str):  # sourcery skip: raise-specific-error
     r_html = requests.get(url).text
@@ -68,7 +69,7 @@ def get_list():
         #         where player = 'Kevin Durant' and (home.name = 'Orlando Magic' or visitor.name = 'Orlando Magic')"""
 
         cursor.execute(query, data)
-        return render_template("games/games.html", cursor=cursor, result=result)
+        return render_template("games/games.html", cursor=cursor, result=result, home = get_home_url())
     except Exception as e:
         raise e  # Renders a page with the error.
     finally:
@@ -116,7 +117,7 @@ def update():
                     data.extend([date, home, h_points, visitor, v_points, href, year, date, home, visitor])
             cursor.execute(query+"COMMIT;", data)
             sleep(60)
-        return render_template("domain/../templates/redirect_to_root.html")
+        return render_template("domain/../templates/redirect_to_root.html", home = get_home_url())
         return "Success loading months: " + str(months)
     except Exception as e:
         raise e  # Renders a page with the error.
@@ -129,12 +130,12 @@ def show():
     dbConn = None
     cursor = None
     try:
-        dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+        dbConn = psycopg2.connect(get_db_connection_string())
         cursor = dbConn.cursor(cursor_factory=DictCursor)
         href = request.args["href"]
         query = "select * from plays join player on player = player.name where plays.href =%s"
         cursor.execute(query, (href,))
-        return render_template("games/show_game.html", cursor=cursor)
+        return render_template("games/show_game.html", cursor=cursor, home = get_home_url())
     except Exception as e:
         raise e  # Renders a page with the error.
     finally:

@@ -4,7 +4,11 @@ from flask import render_template
 import psycopg2
 from psycopg2.extras import DictCursor
 
+import requests
+from bs4 import BeautifulSoup
+
 from utils.dbConnection import get_db_connection_string
+from utils import utils
 
 def get_list():
     dbConn = None
@@ -13,12 +17,16 @@ def get_list():
         dbConn = psycopg2.connect(get_db_connection_string())
         cursor = dbConn.cursor(cursor_factory=DictCursor)
         cursor.execute("SELECT * FROM team ORDER BY name;")
-        return render_template("teams/teams.html", cursor=cursor)
+        return render_template("teams/teams.html", cursor=cursor, home = utils.get_home_url())
     except Exception as e:
         raise e  # Renders a page with the error.
     finally:
         cursor.close()
         dbConn.close()
+
+def get_soup(url):
+    page = requests.get(url)
+    return BeautifulSoup(page.content, 'html.parser')
 
 def update():
     dbConn = None
@@ -47,7 +55,7 @@ def update():
                 data.extend([name, short, season, name, season])
         cursor.execute(query+"COMMIT;", tuple(data))
         update_colors()
-        return render_template("teams/teams.html")
+        return render_template("teams/teams.html", home = utils.get_home_url())
         return str(teams)
     except Exception:
         return str(Exception)  # Renders a page with the error.
@@ -79,7 +87,7 @@ def update_colors():
             """
             data.extend(iter([colors[i], logos[i], teams[i]]))
         cursor.execute(query+"COMMIT;", tuple(data))
-        return render_template("domain/../templates/redirect_to_root.html")
+        return render_template("domain/../templates/redirect_to_root.html", home = utils.get_home_url())
     except Exception as e:
         raise e  # Renders a page with the error.
     finally:
