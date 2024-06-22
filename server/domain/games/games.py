@@ -133,7 +133,7 @@ def show():
         dbConn = psycopg2.connect(get_db_connection_string())
         cursor = dbConn.cursor(cursor_factory=DictCursor)
         href = request.args["href"]
-        query = "select * from plays join player on player = player.name where plays.href =%s"
+        query = "select * from plays join player on player = player.name WHERE plays.game =%s"
         cursor.execute(query, (href,))
         return render_template("games/show_game.html", cursor=cursor, home = get_home_url())
     except Exception as e:

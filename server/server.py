@@ -44,7 +44,7 @@ def games():
 def update_games():
     return domain.games.update()
 
-@app.route("/show_games")
+@app.route("/show_game")
 def show_games():
     return domain.games.show()
 

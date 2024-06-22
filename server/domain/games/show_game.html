@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Table Printer - nbaDB</title>
-    <link rel="stylesheet" type="text/css" href="https://web2.tecnico.ulisboa.pt/~ist199088/templates/styles.css">
+    <title>Game Stats - nbaDB</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link rel="shortcut icon" href="https://www.nba.com/favicon-32x32.png" type="image/png">
+<script src="https://web2.tecnico.ulisboa.pt/~ist199088/templates/test.js"></script>
     <!-- Favicon to work in all desktop browsers:
     <link rel="shortcut icon" href="//static.tecnico.ulisboa.pt/favicon.png" type="image/png"> -->
 </head>
+
 <body>
-    <section id="content-wrap">
-        <div id="background">
+            <div id="background">
             <div class="overlay"></div>
         </div>
-        <div id="logo">
-            <a href="https://web2.tecnico.ulisboa.pt/~ist199088/app.cgi/" style="color: #fff;"><h1>nbaDB</h1></a>
-        </div>
-        <div id="content" class="">
+        <div class="App-header" id="content">
+            <a href="{{home}}"style="color: #fff;">
+                <img src="https://www.nba.com/apple-touch-icon.png" class="App-logo" alt="logo" />
+            </a>
+            <a href="{{home}}"style="color: #fff;">
+                <h1>nbaDB</h1>
+            </a>    </div>
+        <div>
+        <div id="content">
             {% if cursor %}
                 <table>
                     <tbody>
@@ -43,6 +50,8 @@
                 <p> Erro: ao obter dados da base de dados!</p>
             {% endif %}
         </div>
-    </section>
+    </div>
+
 </body>
+
 </html>
