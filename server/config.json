@@ -1,0 +1,6 @@
+{   
+    "DB_HOST" : "db.tecnico.ulisboa.pt",
+    "DB_USER" : "ist199088",
+    "DB_DATABASE" : "ist199088",
+    "DB_PASSWORD" : "jackers"
+}
